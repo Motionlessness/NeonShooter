@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Neon Shooter";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<canvas id="miniGame"></canvas>
+<div class="nav">
+    <div id="pageLinks">
+        <a href="index.html">Home</a>
+        <a href="index.html">Play Again</a>
+        <a href="index.html">Rules</a>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="displayButtons()">
+        <i class="fa fa-bars"></i>
+    </a>
+
+</div>
+
+<svg>
+    <defs>
+        <filter id="liquid">
+            <feGaussianBlur in="SourceGraphic" stdDeviation='10' result='blur' />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 19 -9" result="liquid" />
+            <feComposite in="SourceGraphic" in2="liquid" operator="atop" />
+        </filter>
+    </defs>
+</svg>
+<svg>
+    <defs>
+        <filter id="wave">
+            <feTurbulence type='fractalNoise' baseFrequency='0.0001 0.0001' numOctaves='1' result='wrap' />
+            <feDisplacementMap xChannelSelector='R' yChanelSelector='G' scale='30' in='SourceGraphic' in2='wrapOffset' />
+        </filter>
+    </defs>
+</svg>
+<script src="~/js/miniGame.js"></script>
+<style>
+#miniGame{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,1);
+}
+
+.nav {
+    overflow: hidden;
+    position: absolute;
+    float: left;
+}
+.nav #pageLinks{
+    display: none;
+}
+
+.nav a {
+    color: white;
+    padding: 2px 2px;
+    text-decoration: none;
+    font-size: 40px;
+    display: block;
+}
+
+.nav a.icon {
+    display: block;
+}
+
+.nav a {
+    font-family: Impact;
+    background: none;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    position: relative;
+    filter: url('#liquid');
+}
+
+.nav a::before{
+    content: '';
+    background: radial-gradient( rgba(0, 255, 255, .85)50%, rgba(0,255,0,.85));
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+.nav a:hover{
+    animation: wiggle .5s;
+
+}
+.nav a:hover::before{
+    background: radial-gradient( rgba(66, 0, 255, .85)50%, rgba(210,110,210,.85));
+    filter: url('#wave');
+}
+</style>
