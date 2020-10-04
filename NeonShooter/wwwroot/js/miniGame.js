@@ -68,8 +68,49 @@ class Enemy {
     }
 }
 
+//** #crosshair  all below */
+let mouse = {
+    x: null,
+    y: null
+};
+
+window.addEventListener('mousemove',
+    (event) => {
+        mouse.x = event.x;
+        mouse.y = event.y;
+    }
+);
+
+class Crosshair {
+    constructor(x, y, size, color) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.color = color;
+    }
+
+    draw() {
+        ctx.beginPath();
+        ctx.moveTo(this.x + 10, this.y,);
+        ctx.lineTo(this.x - 10, this.y);
+        ctx.moveTo(this.x, this.y + 10);
+        ctx.lineTo(this.x, this.y - 10);
+        ctx.strokeStyle = this.color;
+        ctx.stroke();
+    }
+
+    update() {
+        this.x = mouse.x;
+        this.y = mouse.y;
+
+        this.draw();
+    }
+}
+// #crosshair end
+
 // generate player
 const player = new Player(center.x, center.y, 40, 'rgba(66,0,110, 1)');
+const crosshair = new Crosshair(mouse.x, mouse.y, 10, 'rgba(255,0,0,1)'); // #crosshair
 
 const projectiles = [];
 const enemies = [];
@@ -131,6 +172,7 @@ function animate() {
         const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y);
         if (dist - enemy.radius - player.radius < .1) {
             cancelAnimationFrame(frame);
+            canvas.style.cursor = 'crosshair'; // #crosshair
         }
 
         projectiles.forEach((projectile, j) => {
@@ -153,6 +195,7 @@ function animate() {
             };
         });
     });
+    crosshair.update(); // #crosshair
 };
 
 window.addEventListener('mousedown',
@@ -162,7 +205,7 @@ window.addEventListener('mousedown',
             x: Math.cos(angle) * 3,
             y: Math.sin(angle) * 3
         };
-        projectiles.push(new Projectile(center.x, center.y, 10, 'rgba(255,255,255,1)', speed))
+        projectiles.push(new Projectile(center.x, center.y, 10, 'rgba(255,255,255,1)', speed));
     }
 );
 
