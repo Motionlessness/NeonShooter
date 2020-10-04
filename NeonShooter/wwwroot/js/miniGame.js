@@ -236,7 +236,7 @@ button.forEach(function (button) {
 
 function displayButtons() {
     var buttons = document.getElementById("pageLinks");
-    if (buttons.style.display === "block") {
+    if (buttons.style.display == "block") {
         buttons.style.display = "none";
     } else {
         buttons.style.display = "block";
