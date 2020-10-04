@@ -6,9 +6,9 @@
 <canvas id="miniGame"></canvas>
 <div class="nav">
     <div id="pageLinks">
-        <a href="index.html">Home</a>
-        <a href="index.html">Play Again</a>
-        <a href="index.html">Rules</a>
+        <a asp-controller="Home" asp-action="Index">Home</a>
+        <a asp-controller="Home" asp-action="NeonShooter">Play Again</a>
+        <a asp-controller="Home" asp-action="Privacy">Rules</a>
     </div>
     <a href="javascript:void(0);" class="icon" onclick="displayButtons()">
         <i class="fa fa-bars"></i>
@@ -46,18 +46,17 @@
 .nav {
     overflow: hidden;
     position: absolute;
-    float: left;
+    top: 1%;
+    right: 5%;
 }
 .nav #pageLinks{
     display: none;
 }
 
 .nav a {
-    color: white;
-    padding: 2px 2px;
     text-decoration: none;
-    font-size: 40px;
-    display: block;
+    font-size: 30px;
+    display: inline-block;
 }
 
 .nav a.icon {
@@ -67,7 +66,7 @@
 .nav a {
     font-family: Impact;
     background: none;
-    color: black;
+    color: rgba(50,50,50,1);
     border: none;
     border-radius: 10px;
     outline: none;
@@ -90,5 +89,8 @@
 .nav a:hover::before{
     background: radial-gradient( rgba(66, 0, 255, .85)50%, rgba(210,110,210,.85));
     filter: url('#wave');
+}
+.footer {
+    display: none;
 }
 </style>
