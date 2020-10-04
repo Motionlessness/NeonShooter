@@ -146,7 +146,7 @@ function spawnEnemy() {
 
 function animate() {
     frame = requestAnimationFrame(animate);
-    ctx.fillStyle = 'rgba(0, 0, 0, .3)'
+    ctx.fillStyle = 'rgba(0, 0, 0, .5)'
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     player.draw();
 
