@@ -107,7 +107,6 @@ class Crosshair {
     }
 }
 // #crosshair end
-
 // generate player
 const player = new Player(center.x, center.y, 40, 'rgba(66,0,110, 1)');
 const crosshair = new Crosshair(mouse.x, mouse.y, 10, 'rgba(255,0,0,1)'); // #crosshair
@@ -117,8 +116,6 @@ const enemies = [];
 let frame;
 let score = 0;
 var finalScore = document.getElementById("score");
-
-
 
 function spawnEnemy() {
     setInterval(() => {
@@ -215,6 +212,18 @@ window.addEventListener('mousedown',
 
 animate();
 spawnEnemy();
+
+window.addEventListener('resize',
+    () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        center.x = canvas.width / 2;
+        center.y = canvas.height / 2;
+        player.x = center.x;
+        player.y = center.y;
+        player.draw();
+    }
+);
 
 function displayButtons() {
     var buttons = document.getElementById("pageLinks");
