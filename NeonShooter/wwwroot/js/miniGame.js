@@ -116,6 +116,7 @@ const projectiles = [];
 const enemies = [];
 let frame;
 let score = 0;
+var finalScore = document.getElementById("score");
 
 
 
@@ -191,7 +192,7 @@ function animate() {
                     setTimeout(() => {
                         enemies.splice(i, 1);
                         projectiles.splice(j, 1);
-                        score += 5;
+                        score += 10;
                     }, 0);
                 }
 
@@ -250,12 +251,17 @@ let rules = document.getElementById("rulesCard");
 let rulesModal = document.getElementById("rules");
 let modal = document.getElementById("endGame");
 let endSpan = document.getElementById("endSpan");
+let retry = document.getElementById("retrySpan");
 let rulesSpan = document.getElementById("close");
 
 function gameEnd() {
+    finalScore.textContent = 'Score: ' + score;
     modal.style.display = "block";
     endSpan.onclick = function () {
         modal.style.display = "none";
+    }
+    retry.onclick = function () {
+        location.reload();
     }
 };
 
