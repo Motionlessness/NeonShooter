@@ -6,8 +6,10 @@
 <canvas id="miniGame"></canvas>
 <div id="endGame" class="modal">
     <div class="modal-content">
-
+        <p class="display-1"><b>Game Over!</b></p>
+        <p class="display-4" id="score"></p>
         <span class="close" id="endSpan">&times;</span>
+        <span id="retrySpan">Retry</span>
     </div>
 </div>
 
@@ -91,10 +93,27 @@
 
 .close:hover,
 .close:focus {
-  color: pink;
+  color: aqua;
   text-decoration: none;
   cursor: pointer;
 }
+
+#retrySpan {
+    color: rgba(0, 255, 0, 1);
+    position: absolute;
+    right: 1%;
+    bottom: 0;
+    font-size: 5rem;
+}
+
+#retrySpan:hover,
+#retrySpan:focus {
+  color: azure;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
 
 .nav {
     overflow: hidden;
