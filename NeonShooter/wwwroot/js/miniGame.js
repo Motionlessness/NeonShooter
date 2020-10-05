@@ -175,7 +175,7 @@ function animate() {
         if (dist - enemy.radius - player.radius < .1) {
             cancelAnimationFrame(frame);
             canvas.style.cursor = 'crosshair'; // #crosshair
-            User.Identity.Score;
+            gameEnd();
         }
 
         projectiles.forEach((projectile, j) => {
@@ -215,6 +215,15 @@ window.addEventListener('mousedown',
 animate();
 spawnEnemy();
 
+function displayButtons() {
+    var buttons = document.getElementById("pageLinks");
+    if (buttons.style.display == "block") {
+        buttons.style.display = "none";
+    } else {
+        buttons.style.display = "block";
+    }
+}
+
 // Javascript to handle button animation
 const button = document.querySelectorAll('a');
 const turbulence = document.querySelector('feTurbulence');
@@ -237,11 +246,24 @@ button.forEach(function (button) {
     })
 });
 
-function displayButtons() {
-    var buttons = document.getElementById("pageLinks");
-    if (buttons.style.display == "block") {
-        buttons.style.display = "none";
-    } else {
-        buttons.style.display = "block";
+let rules = document.getElementById("rulesCard");
+let rulesModal = document.getElementById("rules");
+let modal = document.getElementById("endGame");
+let endSpan = document.getElementById("endSpan");
+let rulesSpan = document.getElementById("close");
+
+function gameEnd() {
+    modal.style.display = "block";
+    endSpan.onclick = function () {
+        modal.style.display = "none";
     }
-}
+};
+
+rules.onclick = function () {
+    rulesModal.style.display = "block";
+    cancelAnimationFrame(frame);
+    rulesSpan.onclick = function () {
+        rulesModal.style.display = "none";
+        animate();
+    };
+};
