@@ -19,6 +19,8 @@
         <p>Using the Red crossshair Aim and Left-Click mouse to shoot the incoming enemy Sphere.</p><br />
         <p>Gain <b>1</b> point per enemy sphere shot. <b>10</b> points per enemy sphere destroyed.</p><br />
         <p>If an enemy sphere hits your sphere in the center the game is over.</p><br />
+        <p class="display-2"><b>Hint:</b></p><br />
+        <p>Press <b>Esc</b> to view rules. Press <b>F5</b> to retry. Press <b>F11</b> to enter/exit fullscreen.</p>
         <span class="close" id="close">&times;</span>
     </div>
 </div>
@@ -62,7 +64,7 @@
 }
 
 .modal {
-    color: azure;
+    color: orangered;
     display: none;
     position: absolute;
     z-index: 1;
@@ -76,14 +78,22 @@
 }
 
 .modal-content {
+    color: forestgreen;
     background-color: rgba(0, 0, 0, 0.8);
     margin: 15% auto;
     padding: 5rem;
     border: 1px solid rgba(66,0,150,1);
     width: 80%;
 }
+
+.modal-content p{
+    color: orangered;
+}
+.modal-content b{
+    color: lawngreen;
+}
 .close {
-    color: rgba(255, 0, 0, 1);
+    color: orangered;
     position: absolute;
     right: 0;
     top: 0;
@@ -99,7 +109,7 @@
 }
 
 #retrySpan {
-    color: rgba(0, 255, 0, 1);
+    color: lawngreen;
     position: absolute;
     right: 1%;
     bottom: 0;
