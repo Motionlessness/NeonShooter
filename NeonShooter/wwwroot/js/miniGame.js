@@ -117,6 +117,8 @@ const enemies = [];
 let frame;
 let score = 0;
 
+
+
 function spawnEnemy() {
     setInterval(() => {
         const radius = Math.random() * (50 - 5) + 5;
@@ -173,6 +175,7 @@ function animate() {
         if (dist - enemy.radius - player.radius < .1) {
             cancelAnimationFrame(frame);
             canvas.style.cursor = 'crosshair'; // #crosshair
+            User.Identity.Score;
         }
 
         projectiles.forEach((projectile, j) => {
