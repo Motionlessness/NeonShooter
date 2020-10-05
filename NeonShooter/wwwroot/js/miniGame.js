@@ -1,4 +1,12 @@
-﻿const canvas = document.getElementById('miniGame');
+﻿let rules = document.getElementById("rulesCard");
+let rulesModal = document.getElementById("rules");
+let modal = document.getElementById("endGame");
+let endSpan = document.getElementById("endSpan");
+let retry = document.getElementById("retrySpan");
+let rulesSpan = document.getElementById("close");
+let rulesOpen = false;
+
+const canvas = document.getElementById('miniGame');
 const ctx = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
@@ -256,13 +264,6 @@ button.forEach(function (button) {
     })
 });
 
-let rules = document.getElementById("rulesCard");
-let rulesModal = document.getElementById("rules");
-let modal = document.getElementById("endGame");
-let endSpan = document.getElementById("endSpan");
-let retry = document.getElementById("retrySpan");
-let rulesSpan = document.getElementById("close");
-
 function gameEnd() {
     finalScore.textContent = 'Score: ' + score;
     modal.style.display = "block";
@@ -282,3 +283,11 @@ rules.onclick = function () {
         animate();
     };
 };
+
+window.addEventListener('keydown',
+    (key) => {
+        if (key.keyCode == 27 && !rulesOpen) {
+            rules.click();
+        }
+    }
+);
