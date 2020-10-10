@@ -1,17 +1,29 @@
-﻿let rules = document.getElementById("rulesCard");
+﻿// Rules Navigation button for Rules Modal
+let rules = document.getElementById("rulesCard");
+
+// Modal that displays/hides the rules to the user
 let rulesModal = document.getElementById("rules");
-let modal = document.getElementById("endGame");
-let endSpan = document.getElementById("endSpan");
-let retry = document.getElementById("retrySpan");
+// button for closing rules modal
 let rulesSpan = document.getElementById("close");
+// Boolean to hide/show rules
 let rulesOpen = false;
 
+// Modal that displays/hides when user's game ends
+let modal = document.getElementById("endGame");
+// button for closing or retrying after game ends
+let closeSpan = document.getElementById("endSpan");
+let retry = document.getElementById("retrySpan");
+
+// Creates a 2D drawing panel
 const canvas = document.getElementById('miniGame');
 const ctx = canvas.getContext('2d');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = window.innerWidth; // set drawing panel to browser viewing width
+canvas.height = window.innerHeight; // set drawing panel to broswer viewing height
+
+// (x,y) co-ordinates for canvas center
 const center = { x: canvas.width / 2, y: canvas.height / 2 };
+
 
 class Player {
     constructor(x, y, radius, color) {
@@ -76,13 +88,13 @@ class Enemy {
     }
 }
 
-//** #crosshair  all below */
+// (x,y) co-ordinates for mouse
 let mouse = {
     x: null,
     y: null
 };
-
-window.addEventListener('mousemove',
+// updates mouse (x,y) co-ordinates
+canvas.addEventListener('mousemove',
     (event) => {
         mouse.x = event.x;
         mouse.y = event.y;
@@ -114,17 +126,26 @@ class Crosshair {
         this.draw();
     }
 }
-// #crosshair end
-// generate player
+
+// construct player in center of canvas
 const player = new Player(center.x, center.y, 40, 'rgba(66,0,110, 1)');
+// draw crosshair on mouse (x,y) co-ordinates
 const crosshair = new Crosshair(mouse.x, mouse.y, 10, 'rgba(255,0,0,1)'); // #crosshair
 
+// constructs an array to contain projectiles
 const projectiles = [];
+// constructs an array to contain enemies
 const enemies = [];
-let frame;
+
+// score of player at new game
 let score = 0;
+// display for player score
 var finalScore = document.getElementById("score");
 
+// current animation frame
+let frame;
+
+// spans enemy randomly around the edge of the canvas
 function spawnEnemy() {
     setInterval(() => {
         const radius = Math.random() * (50 - 5) + 5;
@@ -152,19 +173,24 @@ function spawnEnemy() {
     }, 1000);
 };
 
+// animates the drawing pad 
 function animate() {
     frame = requestAnimationFrame(animate);
-    ctx.fillStyle = 'rgba(0, 0, 0, .5)'
+    // clear canvas and draw player
+    ctx.fillStyle = 'rgba(0, 0, 0, .5)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     player.draw();
 
+    // displays player score to user
     ctx.font = "30px Verdana";
     ctx.fillStyle = 'purple';
     ctx.fillText('Score: ' + score, 50, 50);
 
+    // draw each projectile in array and update possition
     projectiles.forEach((projectile, i) => {
         projectile.update();
 
+        // if projectile leaves canvas its removed from array
         if (projectile.x + projectile.radius < 0 ||
             projectile.x - projectile.radius > canvas.width ||
             projectile.y + projectile.radius < 0 ||
@@ -175,8 +201,10 @@ function animate() {
         }
     });
 
+    // draw each enemy in array and update possition
     enemies.forEach((enemy, i) => {
         enemy.update();
+        // if enemy comes in contact with player stop animation and display end game modal
         const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y);
         if (dist - enemy.radius - player.radius < .1) {
             cancelAnimationFrame(frame);
@@ -184,6 +212,7 @@ function animate() {
             gameEnd();
         }
 
+        // if a projectile hits enemy, reduce enemy size and update score
         projectiles.forEach((projectile, j) => {
             const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
             if (dist - enemy.radius - projectile.radius < .1) {
@@ -204,10 +233,12 @@ function animate() {
             };
         });
     });
+    // keep crosshair on canvas
     crosshair.update(); // #crosshair
 };
 
-window.addEventListener('mousedown',
+// on mouse click or screen tap draw projectiles from center to mouse(x,y) co-ordinates
+canvas.addEventListener('mousedown',
     (e) => {
         const angle = Math.atan2(e.clientY - center.y, e.clientX - center.x);
         const speed = {
@@ -221,6 +252,7 @@ window.addEventListener('mousedown',
 animate();
 spawnEnemy();
 
+// when window is resized updates canvas and player
 window.addEventListener('resize',
     () => {
         canvas.width = window.innerWidth;
@@ -233,6 +265,7 @@ window.addEventListener('resize',
     }
 );
 
+// Displays/hides navigation buttons
 function displayButtons() {
     var buttons = document.getElementById("pageLinks");
     if (buttons.style.display == "block") {
@@ -242,7 +275,7 @@ function displayButtons() {
     }
 }
 
-// Javascript to handle button animation
+// Javascript to handle button animations
 const button = document.querySelectorAll('a');
 const turbulence = document.querySelector('feTurbulence');
 let verticleFrequency = 0.001;
@@ -263,11 +296,13 @@ button.forEach(function (button) {
         }
     })
 });
+// end button animations javascript
 
+// Display/hide end game prompt to user
 function gameEnd() {
     finalScore.textContent = 'Score: ' + score;
     modal.style.display = "block";
-    endSpan.onclick = function () {
+    closeSpan.onclick = function () {
         modal.style.display = "none";
     }
     retry.onclick = function () {
@@ -275,6 +310,8 @@ function gameEnd() {
     }
 };
 
+// Display/hide rules prompt to user on click
+// also cancels / resumes canvas animation
 rules.onclick = function () {
     rulesModal.style.display = "block";
     cancelAnimationFrame(frame);
