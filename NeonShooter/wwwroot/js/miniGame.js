@@ -17,14 +17,16 @@ let retry = document.getElementById("retrySpan");
 // Creates a 2D drawing panel
 const canvas = document.getElementById('miniGame');
 const ctx = canvas.getContext('2d');
-
 canvas.width = window.innerWidth; // set drawing panel to browser viewing width
 canvas.height = window.innerHeight; // set drawing panel to broswer viewing height
 
 // (x,y) co-ordinates for canvas center
 const center = { x: canvas.width / 2, y: canvas.height / 2 };
 
-
+let playerImg = new Image();
+window.onload = () => {
+    playerImg = document.getElementById('playerImg');
+};
 class Player {
     constructor(x, y, radius, color) {
         this.x = x;

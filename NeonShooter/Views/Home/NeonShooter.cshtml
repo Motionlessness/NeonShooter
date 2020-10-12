@@ -4,6 +4,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <canvas id="miniGame"></canvas>
+<img id="playerImg" width="100" height="100" src=".../Images/player.png" alt="Player" />
 <div id="endGame" class="modal">
     <div class="modal-content">
         <p class="display-1"><b>Game Over!</b></p>
@@ -55,124 +56,116 @@
 </svg>
 <script src="~/js/miniGame.js"></script>
 <style>
-#miniGame{
-    cursor: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: rgba(0,0,0,1);
-}
+    #miniGame{
+        cursor: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(0,0,0,1);
+    }
 
-.modal {
-    color: orangered;
-    display: none;
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.5);
+    .modal {
+        color: orangered;
+        display: none;
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.5);
 
-}
+    }
 
-.modal-content {
-    color: forestgreen;
-    background-color: rgba(0, 0, 0, 0.8);
-    margin: 15% auto;
-    padding: 5rem;
-    border: 1px solid rgba(66,0,150,1);
-    width: 80%;
-}
+    .modal-content {
+        color: forestgreen;
+        background-color: rgba(0, 0, 0, 0.8);
+        margin: 15% auto;
+        padding: 5rem;
+        border: 1px solid rgba(66,0,150,1);
+        width: 80%;
+    }
 
-.modal-content p{
-    color: orangered;
-}
-.modal-content b{
-    color: lawngreen;
-}
-.close {
-    color: orangered;
-    position: absolute;
-    right: 0;
-    top: 0;
-    font-size: 15rem;
-    font-weight: bold;
-}
+    .modal-content p{
+        color: orangered;
+    }
+    .modal-content b{
+        color: lawngreen;
+    }
+    .close {
+        color: orangered;
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 15rem;
+        font-weight: bold;
+    }
 
-.close:hover,
-.close:focus {
-  color: aqua;
-  text-decoration: none;
-  cursor: pointer;
-}
+    .close:hover,
+    .close:focus {
+      color: aqua;
+      text-decoration: none;
+      cursor: pointer;
+    }
 
-#retrySpan {
-    color: lawngreen;
-    position: absolute;
-    right: 1%;
-    bottom: 0;
-    font-size: 5rem;
-}
+    #retrySpan {
+        color: lawngreen;
+        position: absolute;
+        right: 1%;
+        bottom: 0;
+        font-size: 5rem;
+    }
 
-#retrySpan:hover,
-#retrySpan:focus {
-  color: azure;
-  text-decoration: none;
-  cursor: pointer;
-}
+    #retrySpan:hover,
+    #retrySpan:focus {
+      color: azure;
+      text-decoration: none;
+      cursor: pointer;
+    }
 
+    .nav {
+        overflow: hidden;
+        position: absolute;
+        top: 1%;
+        right: 5%;
+    }
+    .nav #pageLinks{
+        display: none;
+    }
 
+    .nav a.icon {
+        display: block;
+    }
 
-.nav {
-    overflow: hidden;
-    position: absolute;
-    top: 1%;
-    right: 5%;
-}
-.nav #pageLinks{
-    display: none;
-}
-
-.nav a {
-    text-decoration: none;
-    font-size: 30px;
-    display: inline-block;
-}
-
-.nav a.icon {
-    display: block;
-}
-
-.nav a {
-    font-family: Impact;
-    background: none;
-    color: rgba(50,50,50,1);
-    border: none;
-    border-radius: 10px;
-    outline: none;
-    position: relative;
-    filter: url('#liquid');
-}
-
-.nav a::before{
-    content: '';
-    background: radial-gradient( rgba(0, 255, 255, .85)50%, rgba(0,255,0,.85));
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-.nav a:hover{
-    animation: wiggle .5s;
-
-}
-.nav a:hover::before{
-    background: radial-gradient( rgba(66, 0, 255, .85)50%, rgba(210,110,210,.85));
-    filter: url('#wave');
-}
-.footer {
-    display: none;
-}
+    .nav a {
+        font-size: 2em;
+        display: inline-block;
+        font-family: Impact;
+        background: none;
+        color: rgba(50,50,50,1);
+        border: solid;
+        border-radius: 1em;
+        outline: none;
+        position: relative;
+        filter: url('#liquid');
+    }
+    .nav a::before{
+        content: '';
+        background: radial-gradient( rgba(0, 255, 255, .85)50%, rgba(0,255,0,.85));
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+    .nav a:hover{
+        animation: wiggle .5s;
+    }
+    .nav a:hover::before{
+        background: radial-gradient( rgba(66, 0, 255, .85)50%, rgba(210,110,210,.85));
+        filter: url('#wave');
+    }
+    .footer {
+        display: none;
+    }
 </style>
