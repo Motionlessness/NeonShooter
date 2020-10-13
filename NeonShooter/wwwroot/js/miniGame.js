@@ -29,7 +29,8 @@ playerImg.src = document.getElementById("playerImg").src;
 const playerSVG = new Image();
 playerSVG.src = document.getElementById("playerSVG").src;
 
-
+const backgroundImg = new Image();
+backgroundImg.src = document.getElementById("backgroundImg").src;
 
 class Player {
     constructor(x, y, radius, color) {
@@ -37,7 +38,7 @@ class Player {
         this.y = y;
         this.radius = radius;
         this.color = color;
-        this.radiusShip = (radius*Math.PI);
+        this.radiusShip = (radius * Math.PI);
     }
 
     draw() {
@@ -46,7 +47,7 @@ class Player {
         //ctx.fillStyle = this.color;
         //ctx.fill();
         //ctx.drawImage(playerImg, this.x - (this.radius*2), this.y - (this.radius*2), this.radius * 4, this.radius * 4);
-        ctx.drawImage(playerSVG, this.x - (this.radiusShip/2), this.y - (this.radiusShip/2), this.radiusShip, this.radiusShip);
+        ctx.drawImage(playerSVG, this.x - (this.radiusShip / 2), this.y - (this.radiusShip / 2), this.radiusShip, this.radiusShip);
     }
 
 }
@@ -55,9 +56,9 @@ class Projectile {
     constructor(x, y, radius, color, speed) {
         this.x = x;
         this.y = y;
-        this.radius = radius
-        this.color = color
-        this.speed = speed
+        this.radius = radius;
+        this.color = color;
+        this.speed = speed;
     }
 
     draw() {
@@ -81,13 +82,15 @@ class Enemy {
         this.radius = radius
         this.color = color
         this.speed = speed
+        this.radiusShip = (radius * Math.PI);
     }
 
     draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        ctx.fillStyle = this.color;
-        ctx.fill();
+        //ctx.beginPath();
+        //ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        //ctx.fillStyle = this.color;
+        //ctx.fill();
+        ctx.drawImage(playerImg, this.x - (this.radiusShip / 2), this.y - (this.radiusShip / 2), this.radiusShip, this.radiusShip);
     }
 
     update() {
@@ -157,7 +160,7 @@ let frame;
 // spans enemy randomly around the edge of the canvas
 function spawnEnemy() {
     setInterval(() => {
-        const radius = Math.random() * (50 - 5) + 5;
+        const radius = Math.random() * 50 + 10;
         let x;
         let y;
         if (Math.random() < 0.5) {
@@ -187,7 +190,7 @@ function animate() {
     frame = requestAnimationFrame(animate);
     // clear canvas and draw player
     ctx.fillStyle = 'rgba(0, 0, 0, .5)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
     player.draw();
 
     // displays player score to user
@@ -209,7 +212,6 @@ function animate() {
             }, 0);
         }
     });
-
     // draw each enemy in array and update possition
     enemies.forEach((enemy, i) => {
         enemy.update();
@@ -225,8 +227,8 @@ function animate() {
         projectiles.forEach((projectile, j) => {
             const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
             if (dist - enemy.radius - projectile.radius < .1) {
-                if (enemy.radius - 10 > 10) {
-                    enemy.radius = enemy.radius / 2;
+                if (enemy.radiusShip / Math.PI - 20 > 10) {
+                    enemy.radiusShip = enemy.radiusShip / 2;
                     setTimeout(() => {
                         projectiles.splice(j, 1);
                         score++;
@@ -254,7 +256,13 @@ canvas.addEventListener('mousedown',
             x: Math.cos(angle) * 3,
             y: Math.sin(angle) * 3
         };
-        projectiles.push(new Projectile(center.x, center.y, 10, 'rgba(255,255,255,1)', speed));
+        const rR = Math.random() * 255;
+        const rG = Math.random() * 155 + 100;
+        const rB = Math.random() * 155 + 100;
+
+        const color = 'rgba(' + rR + ',' + rG + ',' + rB + ',1)';
+
+        projectiles.push(new Projectile(center.x, center.y, 10, color, speed));
     }
 );
 
