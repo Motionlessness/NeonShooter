@@ -23,23 +23,30 @@ canvas.height = window.innerHeight; // set drawing panel to broswer viewing heig
 // (x,y) co-ordinates for canvas center
 const center = { x: canvas.width / 2, y: canvas.height / 2 };
 
-let playerImg = new Image();
-window.onload = () => {
-    playerImg = document.getElementById('playerImg');
-};
+const playerImg = new Image();
+playerImg.src = document.getElementById("playerImg").src;
+
+const playerSVG = new Image();
+playerSVG.src = document.getElementById("playerSVG").src;
+
+
+
 class Player {
     constructor(x, y, radius, color) {
         this.x = x;
         this.y = y;
-        this.radius = radius
-        this.color = color
+        this.radius = radius;
+        this.color = color;
+        this.radiusShip = (radius*Math.PI);
     }
 
     draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        ctx.fillStyle = this.color;
-        ctx.fill();
+        //ctx.beginPath();
+        //ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        //ctx.fillStyle = this.color;
+        //ctx.fill();
+        //ctx.drawImage(playerImg, this.x - (this.radius*2), this.y - (this.radius*2), this.radius * 4, this.radius * 4);
+        ctx.drawImage(playerSVG, this.x - (this.radiusShip/2), this.y - (this.radiusShip/2), this.radiusShip, this.radiusShip);
     }
 
 }
