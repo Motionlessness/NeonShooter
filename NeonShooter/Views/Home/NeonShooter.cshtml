@@ -6,6 +6,7 @@
 <canvas id="miniGame"></canvas>
 <img id="playerImg" src="~/images/player.png" hidden/>
 <img id="playerSVG" src="~/images/playerSVG.svg" hidden/>
+<img id="backgroundImg" src="~/images/background.png" hidden/>
 <div id="endGame" class="modal">
     <div class="modal-content">
         <p class="display-1"><b>Game Over!</b></p>
@@ -57,12 +58,11 @@
 </svg>
 <script src="~/js/miniGame.js"></script>
 <style>
-    #miniGame{
+    #miniGame {
         cursor: none;
         position: absolute;
         top: 0;
         left: 0;
-        background: rgba(0,0,0,1);
     }
 
     .modal {
@@ -76,7 +76,6 @@
         height: 100%;
         background-color: rgb(0, 0, 0);
         background-color: rgba(0, 0, 0, 0.5);
-
     }
 
     .modal-content {
@@ -88,12 +87,14 @@
         width: 80%;
     }
 
-    .modal-content p{
+    .modal-content p {
         color: orangered;
     }
-    .modal-content b{
+
+    .modal-content b {
         color: lawngreen;
-    }
+    }   
+
     .close {
         color: orangered;
         position: absolute;
@@ -105,9 +106,9 @@
 
     .close:hover,
     .close:focus {
-      color: aqua;
-      text-decoration: none;
-      cursor: pointer;
+        color: aqua;
+        text-decoration: none;
+        cursor: pointer;
     }
 
     #retrySpan {
@@ -120,9 +121,9 @@
 
     #retrySpan:hover,
     #retrySpan:focus {
-      color: azure;
-      text-decoration: none;
-      cursor: pointer;
+        color: azure;
+        text-decoration: none;
+        cursor: pointer;
     }
 
     .nav {
@@ -131,7 +132,8 @@
         top: 1%;
         right: 5%;
     }
-    .nav #pageLinks{
+
+    .nav #pageLinks {
         display: none;
     }
 
@@ -149,9 +151,10 @@
         border-radius: 1em;
         outline: none;
         position: relative;
-        filter: url('#liquid');
+        filter: url('#liquid');        
     }
-    .nav a::before{
+
+    .nav a::before {
         content: '';
         background: radial-gradient( rgba(0, 255, 255, .85)50%, rgba(0,255,0,.85));
         position: absolute;
@@ -159,13 +162,16 @@
         height: 100%;
         z-index: -1;
     }
-    .nav a:hover{
+
+    .nav a:hover {
         animation: wiggle .5s;
     }
-    .nav a:hover::before{
+
+    .nav a:hover::before {
         background: radial-gradient( rgba(66, 0, 255, .85)50%, rgba(210,110,210,.85));
         filter: url('#wave');
     }
+
     .footer {
         display: none;
     }
