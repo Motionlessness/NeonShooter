@@ -1,0 +1,66 @@
+<svg width="55" height="48" viewBox="0 0 55 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame 2">
+<g id="rocket2">
+<circle id="Ellipse 12" cx="4.58334" cy="33.9167" r="0.916667" fill="#FF7A00" fill-opacity="0.5"/>
+<circle id="Ellipse 18" cx="32.0833" cy="37.5833" r="0.916667" fill="#FF7A00" fill-opacity="0.5"/>
+<circle id="Ellipse 20" cx="39.4167" cy="35.75" r="0.916667" fill="#FF7A00" fill-opacity="0.5"/>
+<circle id="Ellipse 21" cx="50.4167" cy="35.75" r="0.916667" fill="#FF7A00" fill-opacity="0.5"/>
+<circle id="Ellipse 23" cx="53.1667" cy="31.1667" r="1.83333" fill="#FF7A00" fill-opacity="0.5"/>
+<circle id="Ellipse 17" cx="20.1667" cy="38.5" r="1.83333" fill="#FF7A00" fill-opacity="0.5"/>
+<circle id="Ellipse 19" cx="36.6667" cy="38.5" r="1.83333" fill="#FF7A00" fill-opacity="0.5"/>
+<circle id="Ellipse 22" cx="45.8333" cy="36.6667" r="1.83333" fill="#FF7A00" fill-opacity="0.5"/>
+<circle id="Ellipse 16" cx="24.75" cy="37.5833" r="0.916667" fill="#FF7A00" fill-opacity="0.5"/>
+<circle id="Ellipse 15" cx="17.4167" cy="35.75" r="0.916667" fill="#FF7A00" fill-opacity="0.5"/>
+<circle id="Ellipse 14" cx="11.9167" cy="35.75" r="0.916667" fill="#FF7A00" fill-opacity="0.5"/>
+<circle id="Ellipse 13" cx="7.33334" cy="36.6667" r="1.83333" fill="#FF7A00" fill-opacity="0.5"/>
+</g>
+<g id="rocket1">
+<path id="Ellipse 8" d="M4.04311 29.1669C3.78049 29.8397 3.65298 30.5577 3.66784 31.2798C3.6827 32.0019 3.83964 32.7141 4.12971 33.3755C4.41979 34.037 4.8373 34.6348 5.35842 35.1349C5.87955 35.6351 6.49407 36.0276 7.16691 36.2902C7.83974 36.5528 8.55772 36.6804 9.27983 36.6655C10.002 36.6506 10.7141 36.4937 11.3755 36.2036C12.037 35.9135 12.6348 35.496 13.135 34.9749C13.6351 34.4538 14.0276 33.8393 14.2902 33.1664L9.16667 31.1667L4.04311 29.1669Z" fill="#000AFF"/>
+<path id="Ellipse 10" d="M16.5 33C16.5 33.7223 16.6423 34.4375 16.9187 35.1048C17.1951 35.772 17.6002 36.3784 18.1109 36.8891C18.6216 37.3998 19.228 37.8049 19.8952 38.0813C20.5625 38.3577 21.2777 38.5 22 38.5C22.7223 38.5 23.4375 38.3577 24.1048 38.0813C24.7721 37.8049 25.3784 37.3998 25.8891 36.8891C26.3998 36.3784 26.8049 35.772 27.0813 35.1048C27.3577 34.4375 27.5 33.7223 27.5 33H22L16.5 33Z" fill="#000AFF"/>
+<path id="Ellipse 11" d="M29.3875 33.7701C29.4886 34.4852 29.7296 35.1735 30.0968 35.7955C30.4639 36.4175 30.9499 36.9611 31.5271 37.3953C32.1043 37.8295 32.7613 38.1457 33.4608 38.326C34.1602 38.5062 34.8883 38.5469 35.6034 38.4458C36.3186 38.3447 37.0068 38.1037 37.6288 37.7366C38.2508 37.3695 38.7945 36.8835 39.2286 36.3063C39.6628 35.7291 39.9791 35.072 40.1593 34.3726C40.3396 33.6732 40.3803 32.9451 40.2792 32.2299L34.8333 33L29.3875 33.7701Z" fill="#000AFF"/>
+<path id="Ellipse 9" d="M42.4558 32.9264C42.7106 33.681 43.1263 34.3712 43.674 34.9493C44.2217 35.5275 44.8885 35.9798 45.6282 36.275C46.3679 36.5701 47.1629 36.7011 47.9582 36.6589C48.7535 36.6167 49.5301 36.4023 50.2344 36.0305C50.9387 35.6587 51.5539 35.1383 52.0373 34.5054C52.5208 33.8725 52.861 33.1422 53.0346 32.3649C53.2081 31.5876 53.2107 30.7819 53.0423 30.0035C52.8739 29.2251 52.5384 28.4926 52.0591 27.8566L47.6667 31.1667L42.4558 32.9264Z" fill="#000AFF"/>
+</g>
+<g id="spaceship">
+<g id="Ellipse 1" filter="url(#filter0_d)">
+<ellipse cx="27.5" cy="23.8333" rx="27.5" ry="11" fill="#FF00C8"/>
+</g>
+<g id="Ellipse 2" filter="url(#filter1_i)">
+<path d="M49.5 23.8333C49.5 17.5123 47.1821 11.4502 43.0564 6.98062C38.9305 2.51101 33.3348 4.77222e-07 27.5 0C21.6652 -4.77222e-07 16.0695 2.511 11.9437 6.98062C7.81785 11.4502 5.5 17.5123 5.5 23.8333L27.5 23.8333H49.5Z" fill="#00FF00"/>
+</g>
+<path id="Ellipse 3" d="M49.5 23.8333C49.5 25.0371 48.931 26.2291 47.8253 27.3413C46.7197 28.4534 45.0992 29.4639 43.0564 30.3151C41.0135 31.1664 38.5882 31.8416 35.919 32.3022C33.2499 32.7629 30.3891 33 27.5 33C24.6109 33 21.7501 32.7629 19.081 32.3022C16.4118 31.8416 13.9865 31.1664 11.9436 30.3151C9.90076 29.4639 8.28025 28.4534 7.17465 27.3413C6.06905 26.2291 5.5 25.0371 5.5 23.8333L27.5 23.8333H49.5Z" fill="url(#paint0_radial)"/>
+</g>
+<g id="alien">
+<circle id="Ellipse 4" cx="27.5" cy="18.3333" r="5.5" fill="#FF0000"/>
+<circle id="Ellipse 5" cx="30.25" cy="17.4167" r="0.916667" fill="#000AFF"/>
+<circle id="Ellipse 6" cx="25.6667" cy="16.5" r="1.83333" fill="#000AFF"/>
+<path id="Ellipse 7" d="M29.2603 20.6789C29.1245 21.1457 28.8087 21.5395 28.3826 21.7736C27.9564 22.0077 27.4547 22.0628 26.9878 21.927C26.5209 21.7912 26.1271 21.4754 25.8931 21.0492C25.659 20.623 25.6038 20.1213 25.7397 19.6545L27.5 20.1667L29.2603 20.6789Z" fill="#000AFF"/>
+<path id="Vector 1" d="M26.9323 13.0379C26.9991 12.6285 26.8975 12.2519 26.8104 11.8598C26.7482 11.5798 26.6828 11.2751 26.5869 11.0067C26.3966 10.4738 26.2252 9.99042 25.9573 9.52162C25.8311 9.30076 25.6132 9.13742 25.3885 9.0251C25.1862 8.92393 24.9325 8.65046 24.6979 8.65046C24.4005 8.65046 24.2779 8.68844 24.0479 8.8942C23.9743 8.96008 23.9071 9.01704 23.8358 9.0883C23.757 9.1671 23.752 9.3043 23.6417 9.34107" stroke="#FF0000" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector 2" d="M30.954 13.9722C31.2718 12.9593 31.1568 11.7779 30.6494 10.8645C30.5474 10.6808 30.4645 10.4584 30.3131 10.307C30.1853 10.1792 30.0051 10.0476 29.8978 9.90077C29.6988 9.62846 29.3308 9.51304 29.0763 9.30947C28.9827 9.23457 28.9975 9.54634 28.9838 9.58481C28.9528 9.67162 28.9191 9.87104 28.8416 9.9098" stroke="#FF0000" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Polygon 1" d="M27.5 23.8333L32.7308 27.0003L30.7328 32.1247H24.2672L22.2692 27.0003L27.5 23.8333Z" fill="#FF0000"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d" x="0" y="12.8333" width="55" height="22.75" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feOffset dy="0.75"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.803922 0 0 0 0 0 0 0 0 0 0.784314 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+<filter id="filter1_i" x="5.5" y="0" width="44" height="25.8333" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="1"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow"/>
+</filter>
+<radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(27.5 23.8333) rotate(90) scale(9.16667 22)">
+<stop offset="0.940669" stop-color="#00FF00"/>
+<stop offset="1" stop-color="#BCFFBC"/>
+</radialGradient>
+</defs>
+</svg>
