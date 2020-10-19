@@ -23,49 +23,43 @@ canvas.height = window.innerHeight; // set drawing panel to broswer viewing heig
 // (x,y) co-ordinates for canvas center
 const center = { x: canvas.width / 2, y: canvas.height / 2 };
 
-const playerImg = new Image();
-playerImg.src = document.getElementById("playerImg").src;
+const enemySVG = new Image();
+enemySVG.src = document.getElementById("enemySVG").src;
 
 const playerSVG = new Image();
 playerSVG.src = document.getElementById("playerSVG").src;
 
+const projectile = new Image();
+projectile.src = document.getElementById("projectileSVG").src;
+
 const backgroundImg = new Image();
 backgroundImg.src = document.getElementById("backgroundImg").src;
 
+
 class Player {
-    constructor(x, y, radius, color) {
+    constructor(x, y, radius) {
         this.x = x;
         this.y = y;
         this.radius = radius;
-        this.color = color;
         this.radiusShip = (radius * Math.PI);
     }
 
     draw() {
-        //ctx.beginPath();
-        //ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        //ctx.fillStyle = this.color;
-        //ctx.fill();
-        //ctx.drawImage(playerImg, this.x - (this.radius*2), this.y - (this.radius*2), this.radius * 4, this.radius * 4);
         ctx.drawImage(playerSVG, this.x - (this.radiusShip / 2), this.y - (this.radiusShip / 2), this.radiusShip, this.radiusShip);
     }
 
 }
 
 class Projectile {
-    constructor(x, y, radius, color, speed) {
+    constructor(x, y, radius, speed) {
         this.x = x;
         this.y = y;
         this.radius = radius;
-        this.color = color;
         this.speed = speed;
     }
 
     draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        ctx.fillStyle = this.color;
-        ctx.fill();
+        ctx.drawImage(projectile, this.x, this.y, this.radius, this.radius);
     }
 
     update() {
@@ -76,21 +70,16 @@ class Projectile {
 }
 
 class Enemy {
-    constructor(x, y, radius, color, speed) {
+    constructor(x, y, radius, speed) {
         this.x = x;
         this.y = y;
-        this.radius = radius
-        this.color = color
-        this.speed = speed
+        this.radius = radius;
+        this.speed = speed;
         this.radiusShip = (radius * Math.PI);
     }
 
     draw() {
-        //ctx.beginPath();
-        //ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        //ctx.fillStyle = this.color;
-        //ctx.fill();
-        ctx.drawImage(playerImg, this.x - (this.radiusShip / 2), this.y - (this.radiusShip / 2), this.radiusShip, this.radiusShip);
+        ctx.drawImage(enemySVG, this.x - (this.radiusShip / 2), this.y - (this.radiusShip / 2), this.radiusShip, this.radiusShip);
     }
 
     update() {
@@ -140,7 +129,7 @@ class Crosshair {
 }
 
 // construct player in center of canvas
-const player = new Player(center.x, center.y, 40, 'rgba(66,0,110, 1)');
+const player = new Player(center.x, center.y, 40);
 // draw crosshair on mouse (x,y) co-ordinates
 const crosshair = new Crosshair(mouse.x, mouse.y, 10, 'rgba(255,0,0,1)'); // #crosshair
 
@@ -157,39 +146,34 @@ var finalScore = document.getElementById("score");
 // current animation frame
 let frame;
 
-// spans enemy randomly around the edge of the canvas
+// spawns enemy randomly around the edge of the canvas
 function spawnEnemy() {
     setInterval(() => {
-        const radius = Math.random() * 50 + 10;
+        const radius = Math.random() * 40 + 10;
         let x;
         let y;
         if (Math.random() < 0.5) {
-            x = Math.random() < 0.5 ? 0 - radius : canvas.width + radius;
+            x = Math.random() < 0.5 ? 0 - radius * Math.PI : canvas.width + radius * Math.PI;
             y = Math.random() * canvas.height;
         } else {
             x = Math.random() * canvas.width;
-            y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius;
+            y = Math.random() < 0.5 ? 0 - radius * Math.PI : canvas.height + radius * Math.PI;
         }
-        const rR = Math.random() * 255;
-        const rG = Math.random() * 255;
-        const rB = Math.random() * 255;
 
-        const color = 'rgba(' + rR + ',' + rG + ',' + rB + ',1)';
         const angle = Math.atan2(center.y - y, center.x - x);
         const speed = {
             x: Math.cos(angle),
             y: Math.sin(angle)
         };
 
-        enemies.push(new Enemy(x, y, radius, color, speed));
-    }, 1000);
+        enemies.push(new Enemy(x, y, radius, speed));
+    }, 2000);
 };
 
 // animates the drawing pad 
 function animate() {
     frame = requestAnimationFrame(animate);
     // clear canvas and draw player
-    ctx.fillStyle = 'rgba(0, 0, 0, .5)';
     ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
     player.draw();
 
@@ -227,7 +211,7 @@ function animate() {
         projectiles.forEach((projectile, j) => {
             const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
             if (dist - enemy.radius - projectile.radius < .1) {
-                if (enemy.radiusShip / Math.PI - 20 > 10) {
+                if (enemy.radiusShip / Math.PI - 20 >= 20) {
                     enemy.radiusShip = enemy.radiusShip / 2;
                     setTimeout(() => {
                         projectiles.splice(j, 1);
@@ -256,13 +240,7 @@ canvas.addEventListener('mousedown',
             x: Math.cos(angle) * 3,
             y: Math.sin(angle) * 3
         };
-        const rR = Math.random() * 255;
-        const rG = Math.random() * 155 + 100;
-        const rB = Math.random() * 155 + 100;
-
-        const color = 'rgba(' + rR + ',' + rG + ',' + rB + ',1)';
-
-        projectiles.push(new Projectile(center.x, center.y, 10, color, speed));
+        projectiles.push(new Projectile(center.x, center.y, 15, speed));
     }
 );
 
