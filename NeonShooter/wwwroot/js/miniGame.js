@@ -313,7 +313,6 @@ rules.onclick = function () {
     rulesSpan.onclick = function () {
         rulesModal.style.display = "none";
         animate();
-        spawnEnemy();
     };
 };
 
