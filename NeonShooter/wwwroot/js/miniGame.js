@@ -202,8 +202,6 @@ function animate() {
         // if enemy comes in contact with player stop animation and display end game modal
         const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y);
         if (dist - enemy.radius - player.radius < .1) {
-            cancelAnimationFrame(frame);
-            canvas.style.cursor = 'crosshair'; // #crosshair
             gameEnd();
         }
 
@@ -295,6 +293,8 @@ button.forEach(function (button) {
 
 // Display/hide end game prompt to user
 function gameEnd() {
+    cancelAnimationFrame(frame);
+    canvas.style.cursor = 'crosshair'; // #crosshair
     finalScore.textContent = 'Score: ' + score;
     modal.style.display = "block";
     closeSpan.onclick = function () {
@@ -313,6 +313,7 @@ rules.onclick = function () {
     rulesSpan.onclick = function () {
         rulesModal.style.display = "none";
         animate();
+        spawnEnemy();
     };
 };
 
@@ -320,6 +321,11 @@ window.addEventListener('keydown',
     (key) => {
         if (key.keyCode == 27 && !rulesOpen) {
             rules.click();
+            rulesOpen = true;
+        }
+        else if (key.keyCode == 27 && rulesOpen) {
+            rulesSpan.click();
+            rulesOpen = false;
         }
     }
 );
