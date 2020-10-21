@@ -174,6 +174,7 @@ function spawnEnemy() {
 function animate() {
     frame = requestAnimationFrame(animate);
     // clear canvas and draw player
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
     player.draw();
 
@@ -312,7 +313,8 @@ rules.onclick = function () {
     cancelAnimationFrame(frame);
     rulesSpan.onclick = function () {
         rulesModal.style.display = "none";
-        animate();
+        clearInterval(spawnEnemy);
+        requestAnimationFrame(animate);
     };
 };
 
