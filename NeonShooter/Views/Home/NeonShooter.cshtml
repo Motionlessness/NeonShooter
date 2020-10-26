@@ -59,6 +59,11 @@
 </svg>
 <script src="~/js/miniGame.js"></script>
 <style>
+    * {
+        -moz-user-select: none;
+        user-select: none;
+    }
+
     #miniGame {
         cursor: none;
         position: absolute;
@@ -88,13 +93,13 @@
         width: 80%;
     }
 
-        .modal-content p {
-            color: orangered;
-        }
+    .modal-content p {
+        color: orangered;
+    }
 
-        .modal-content b {
-            color: lawngreen;
-        }
+    .modal-content b {
+        color: lawngreen;
+    }
 
     .close {
         color: orangered;
@@ -105,12 +110,12 @@
         font-weight: bold;
     }
 
-        .close:hover,
-        .close:focus {
-            color: aqua;
-            text-decoration: none;
-            cursor: pointer;
-        }
+    .close:hover,
+    .close:focus {
+        color: aqua;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
     #retrySpan {
         color: lawngreen;
@@ -120,12 +125,12 @@
         font-size: 5rem;
     }
 
-        #retrySpan:hover,
-        #retrySpan:focus {
-            color: azure;
-            text-decoration: none;
-            cursor: pointer;
-        }
+    #retrySpan:hover,
+    #retrySpan:focus {
+        color: azure;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
     .nav {
         overflow: hidden;
@@ -134,44 +139,44 @@
         right: 5%;
     }
 
-        .nav #pageLinks {
-            display: none;
-        }
+    .nav #pageLinks {
+        display: none;
+    }
 
-        .nav a.icon {
-            display: block;
-        }
+    .nav a.icon {
+        display: block;
+    }
 
-        .nav a {
-            font-size: 2em;
-            display: inline-block;
-            font-family: Impact;
-            background: none;
-            color: rgba(50,50,50,1);
-            border: solid;
-            border-radius: 1em;
-            outline: none;
-            position: relative;
-            filter: url('#liquid');
-        }
+    .nav a {
+        font-size: 2em;
+        display: inline-block;
+        font-family: Impact;
+        background: none;
+        color: rgba(50,50,50,1);
+        border: solid;
+        border-radius: 1em;
+        outline: none;
+        position: relative;
+        filter: url('#liquid');
+    }
 
-            .nav a::before {
-                content: '';
-                background: radial-gradient( rgba(0, 255, 255, .85)50%, rgba(0,255,0,.85));
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                z-index: -1;
-            }
+    .nav a::before {
+        content: '';
+        background: radial-gradient( rgba(0, 255, 255, .85)50%, rgba(0,255,0,.85));
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
 
-            .nav a:hover {
-                animation: wiggle .5s;
-            }
+    .nav a:hover {
+        animation: wiggle .5s;
+    }
 
-                .nav a:hover::before {
-                    background: radial-gradient( rgba(66, 0, 255, .85)50%, rgba(210,110,210,.85));
-                    filter: url('#wave');
-                }
+    .nav a:hover::before {
+        background: radial-gradient( rgba(66, 0, 255, .85)50%, rgba(210,110,210,.85));
+        filter: url('#wave');
+    }
 
     .footer {
         display: none;
