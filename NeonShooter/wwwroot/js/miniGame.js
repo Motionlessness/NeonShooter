@@ -42,6 +42,7 @@ class Upgrade {
         this.radius = radius;
         this.speed = speed;
         this.type = type; // Offensive(true) or Defensive(false) boolean upgrade
+        this.active = false;
     }
 
     draw() {
@@ -60,15 +61,19 @@ class Upgrade {
     }
 
     update() {
-        this.draw();
-        this.x = this.x + this.speed.x;
-        this.y = this.y + this.speed.y;
+        if (!this.active) {
+            this.draw();
+            this.x = this.x + this.speed.x;
+            this.y = this.y + this.speed.y;
+        } else {
+            this.drawUse();
+        }
     }
 
     drawUse() {
         if (this.type == true) {
             ctx.beginPath();
-            ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2, false);
+            ctx.arc(player.x, player.y, player.radius/2, 0, Math.PI * 2, false);
             ctx.strokeStyle = 'rgba(250,0,250,1)';
             ctx.stroke();
         }
@@ -184,7 +189,7 @@ const projectiles = [];
 const enemies = [];
 // constructs an array to contain upgrades #upgrade
 const upgrades = [];
-const playUpgrade = []; // an array for players collected upgrades #upgrade
+
 
 // score of player at new game
 let score = 0;
@@ -251,9 +256,20 @@ function animate() {
         enemy.update();
         // if enemy comes in contact with player stop animation and display end game modal
         const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y);
-        if (dist - enemy.radiusShip / 2 - player.radiusShip / 2 < .05) {
+        
+        for (let upgrade of upgrades) {
+            if (!upgrade.type && upgrade.active && (dist - enemy.radiusShip / 2 - player.radiusShip / 2 < .05)) {
+                setTimeout(() => {
+                    enemies.splice(i, 1);
+                    upgrades.splice(upgrades.indexOf(upgrade),1);
+                }, 0);
+                break;
+            };
+        };
+        if (dist - enemy.radiusShip / 2 - player.radiusShip / 2 < .05 && !upgrades.some(checkUpgrade)) {
             gameEnd();
-        }
+        };
+        
 
         // if a projectile hits enemy, reduce enemy size and update score
         projectiles.forEach((projectile, j) => {
@@ -282,13 +298,8 @@ function animate() {
     upgrades.forEach((upgrade, i) => {
         upgrade.update();
         const dist = Math.hypot(player.x - upgrade.x, player.y - upgrade.y);
-        if (dist - upgrade.radius / 2 - player.radiusShip / 2 < .05) {
-            upgrade.speed = 0;
-            upgrade.drawUse();
-            setTimeout(() => {
-                upgrades.splice(i, 1);
-                alert('Upgrade ended!');
-            }, 30000);
+        if (dist - upgrade.radius / 2 - player.radiusShip / 2 < .05 && !upgrade.active) {
+            upgrade.active = true;
         };
 
     });
@@ -371,7 +382,9 @@ function gameEnd() {
         location.reload();
     }
 };
-
+function checkUpgrade(upgrade) {
+    return !upgrade.type;
+}
 // Display/hide rules prompt to user on click
 // also cancels / resumes canvas animation
 rules.onclick = function () {
