@@ -383,7 +383,7 @@ function gameEnd() {
     }
 };
 function checkUpgrade(upgrade) {
-    return upgrade.type;
+    return !upgrade.type;
 }
 // Display/hide rules prompt to user on click
 // also cancels / resumes canvas animation
