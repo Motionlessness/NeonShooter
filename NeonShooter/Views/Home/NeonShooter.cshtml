@@ -23,8 +23,12 @@
         <p>Using the Red crossshair Aim and Left-Click mouse to shoot the incoming enemy spaceship.</p><br />
         <p>Gain <b>1</b> point per enemy spaceship you shoot. <b>10</b> points per enemy spaceship you destroy.</p><br />
         <p>If an enemy spaceship hits your spaceship in the center, the game is over.</p><br />
+        <p>Enemies randomly drop an <i class="off">Offensive</i> or <i class="def">Defensive</i> upgrade on destruction. </p><br />
+        <p><i class="off">Offensive</i> upgrades make your projectiles very <b>powerful!</b></p><br />
+        <p><i class="def">Defensive</i> upgrades protect your spaceship from <b>1</b> enemy impact.</p><br />
         <p class="display-2"><b>Hint:</b></p><br />
-        <p>Press <b>Esc</b> to view/close rules. Press <b>F5</b> to retry. Press <b>F11</b> to enter/exit fullscreen.</p>
+        <p>Press <b>Esc</b> to view/close rules. Press <b>F5</b> to retry. Press <b>F11</b> to enter/exit fullscreen.</p><br />
+        <p><i class="def">Defensive</i> upgrades stack!</p>
         <span class="close" id="close">&times;</span>
     </div>
 </div>
@@ -180,5 +184,13 @@
 
     .footer {
         display: none;
+    }
+
+    .off {
+        color: rgba(255, 0, 255, 1);
+    }
+
+    .def {
+        color: rgba(0, 255, 0, 1);
     }
 </style>
