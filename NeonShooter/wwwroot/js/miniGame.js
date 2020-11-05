@@ -106,6 +106,7 @@ class Projectile {
         this.y = y;
         this.radius = radius;
         this.speed = speed;
+        this.upgraded = false;
     }
 
     draw() {
@@ -113,9 +114,16 @@ class Projectile {
     }
 
     update() {
-        this.draw();
-        this.x = this.x + this.speed.x;
-        this.y = this.y + this.speed.y;
+        if (this.upgraded) {
+            this.radius = 30;
+            this.draw();
+            this.x = this.x + this.speed.x;
+            this.y = this.y + this.speed.y;
+        } else {
+            this.draw();
+            this.x = this.x + this.speed.x;
+            this.y = this.y + this.speed.y;
+        }
     }
 }
 
@@ -251,6 +259,7 @@ function animate() {
             }, 0);
         }
     });
+
     // draw each enemy in array and update possition
     enemies.forEach((enemy, i) => {
         enemy.update();
@@ -273,8 +282,8 @@ function animate() {
 
         // if a projectile hits enemy, reduce enemy size and update score
         projectiles.forEach((projectile, j) => {
-            const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
-            if (dist - enemy.radiusShip / 2 - projectile.radius / 2 < .05) {
+            const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);           
+            if (dist - enemy.radiusShip / 2 - projectile.radius / 2 < .05 && !projectile.upgraded) {
                 if (enemy.radiusShip - 15 >= 20) {
                     enemy.radiusShip = enemy.radiusShip / 2;
                     setTimeout(() => {
@@ -284,13 +293,21 @@ function animate() {
                 } else {
                     setTimeout(() => {
                         const reward = Math.random() * 2 < 0.5 ? true : false; // Random reward boolean #upgrade
-                        if (reward) { upgrades.push(new Upgrade(enemy.x, enemy.y, 5, enemy.speed, Math.random() < 0.5 ? true : false)) }; // #upgrade
+                        if (reward) { upgrades.push(new Upgrade(enemy.x, enemy.y, 5, enemy.speed, Math.random() < 0.33 ? true : false)) }; // #upgrade
                         enemies.splice(i, 1);
                         projectiles.splice(j, 1);
                         score += 10;
                     }, 0);
                 }
 
+            };
+            if (dist - enemy.radiusShip / 2 - projectile.radius / 2 < .05 && projectile.upgraded) {
+                setTimeout(() => {
+                    const reward = Math.random() * 4 < 0.5 ? true : false; // Random reward boolean #upgrade
+                    if (reward) { upgrades.push(new Upgrade(enemy.x, enemy.y, 5, enemy.speed, false)) }; // #upgrade
+                    enemies.splice(i, 1);
+                    score += 10;
+                }, 0);
             };
         });
     });
@@ -301,7 +318,11 @@ function animate() {
         if (dist - upgrade.radius / 2 - player.radiusShip / 2 < .05 && !upgrade.active) {
             upgrade.active = true;
         };
-
+        for (let projectile of projectiles) {
+            if (upgrade.type && upgrade.active && !projectile.upgraded) {
+                projectile.upgraded = true;
+            }
+        }
     });
     // #upgrade end
     // keep crosshair on canvas
