@@ -73,13 +73,13 @@ class Upgrade {
     drawUse() {
         if (this.type == true) {
             ctx.beginPath();
-            ctx.arc(player.x, player.y, player.radius/2, 0, Math.PI * 2, false);
+            ctx.arc(player.x, player.y, player.radius/2.5, 0, Math.PI * 2, false);
             ctx.strokeStyle = 'rgba(250,0,250,1)';
             ctx.stroke();
         }
         else {
             ctx.beginPath();
-            ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2, false);
+            ctx.arc(player.x, player.y, player.radius/2, 0, Math.PI * 2, false);
             ctx.strokeStyle = 'rgba(0,250,0,1)';
             ctx.stroke();
         }
@@ -133,7 +133,7 @@ class Enemy {
         this.y = y;
         this.radius = radius;
         this.speed = speed;
-        this.radiusShip = Math.sqrt(((radius / 2) * (radius / 2)) * 2);;
+        this.radiusShip = Math.sqrt(((radius / 2) * (radius / 2)) * 2);
     }
 
     draw() {
@@ -144,6 +144,29 @@ class Enemy {
         this.draw();
         this.x = this.x + this.speed.x;
         this.y = this.y + this.speed.y;
+    }
+}
+
+class Boss {
+    constructor(x, y, radius, speed) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.speed = speed;
+        this.health = 10000;
+        this.radiusShip = Math.sqrt(((radius / 2) * (radius / 2)) * 2);
+    }
+
+    draw() {
+        ctx.drawImage(enemySVG, this.x - (this.radiusShip / 2), this.y - (this.radiusShip / 2), this.radiusShip, this.radiusShip);
+    }
+
+    update() {
+        this.draw();
+        this.speed += 0.002;
+        const distance = window.innerHeight > window.innerWidth ? (window.innerWidth / 3) : (window.innerHeight / 3);
+        this.x = center.x + (distance * Math.sin(this.speed));
+        this.y = center.y + (distance * Math.cos(this.speed));
     }
 }
 
@@ -195,21 +218,176 @@ const crosshair = new Crosshair(mouse.x, mouse.y, 10, 'rgba(255,0,0,1)'); // #cr
 const projectiles = [];
 // constructs an array to contain enemies
 const enemies = [];
+const bosses = [];
 // constructs an array to contain upgrades #upgrade
 const upgrades = [];
 
 
 // score of player at new game
 let score = 0;
+let enemyCount = 0;
 // display for player score
 var finalScore = document.getElementById("score");
 
 // current animation frame
 let frame;
+var enemyTimer;
+// spawns a boss at 50 enemies destroyed
+function spawnBoss() {
+    const radius = 300;
+    const distance = window.innerHeight > window.innerWidth ? (window.innerWidth / 4) : (window.innerHeight / 4) ;
+    let angle = 0;
+    let x = center.x + (distance * Math.sin(angle));
+    let y = center.y + (distance * Math.cos(angle));
+    
+    bosses.push(new Boss(x, y, radius, angle));
+};
+
+function animateBoss() {
+    frame = requestAnimationFrame(animateBoss);
+
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+    player.draw();
+
+    ctx.font = "30px Verdana";
+    ctx.fillStyle = 'purple';
+    ctx.fillText('Score: ' + score, 50, 50);
+
+    if (Math.random() * 100 < 0.5) {
+        const radius = Math.random() * 100 + 55;
+        let x;
+        let y;
+        if (Math.random() < 0.5) {
+            x = Math.random() < 0.5 ? 0 - radius * Math.PI : canvas.width + radius * Math.PI;
+            y = Math.random() * canvas.height;
+        } else {
+            x = Math.random() * canvas.width;
+            y = Math.random() < 0.5 ? 0 - radius * Math.PI : canvas.height + radius * Math.PI;
+        }
+
+        const angle = Math.atan2(center.y - y, center.x - x);
+        const speed = {
+            x: Math.cos(angle),
+            y: Math.sin(angle)
+        };
+
+
+        enemies.push(new Enemy(x, y, radius, speed));
+    }
+
+    projectiles.forEach((projectile, i) => {
+        projectile.update();
+
+        // if projectile leaves canvas its removed from array
+        if (projectile.x + projectile.radius < 0 ||
+            projectile.x - projectile.radius > canvas.width ||
+            projectile.y + projectile.radius < 0 ||
+            projectile.y - projectile.radius > canvas.height) {
+            setTimeout(() => {
+                projectiles.splice(i, 1);
+            }, 0);
+        }
+    });
+    bosses.forEach((boss, i) => {
+        boss.update();
+        
+        projectiles.forEach((projectile, j) => {
+            const dist = Math.hypot(projectile.x - boss.x, projectile.y - boss.y);
+            if (dist - boss.radiusShip / 2 - projectile.radius / 2 < .05 && !projectile.upgraded) {
+                boss.radius -= 0.15;
+                boss.radiusShip = Math.sqrt(((boss.radius / 2) * (boss.radius / 2)) * 2);
+                boss.health -= 5;
+                projectiles.splice(j, 1);
+            }
+            if (dist - boss.radiusShip / 2 - projectile.radius / 2 < .05 && projectile.upgraded) {
+                boss.radius -= 0.15;
+                boss.radiusShip = Math.sqrt(((boss.radius / 2) * (boss.radius / 2)) * 2);
+                boss.health -= 10;
+                projectile.upgraded = false;
+            }
+            if (boss.health < 0) {
+                score += 100;
+                bosses.splice(i, 1);
+                setTimeout(() => {
+                    cancelAnimationFrame(frame);
+                    animate();
+                    spawnEnemy();
+                },0);
+            }
+        });
+    });
+    enemies.forEach((enemy, i) => {
+        enemy.update();
+        // if enemy comes in contact with player stop animation and display end game modal
+        const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y);
+
+        for (let upgrade of upgrades) {
+            if (!upgrade.type && upgrade.active && (dist - enemy.radiusShip / 2 - player.radiusShip / 2 < .05)) {
+                setTimeout(() => {
+                    enemies.splice(i, 1);
+                    upgrades.splice(upgrades.indexOf(upgrade), 1);
+                }, 0);
+                break;
+            };
+        };
+        if (dist - enemy.radiusShip / 2 - player.radiusShip / 2 < .05 && !upgrades.some(checkUpgrade)) {
+            gameEnd();
+        };
+
+
+        // if a projectile hits enemy, reduce enemy size and update score
+        projectiles.forEach((projectile, j) => {
+            const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y);
+            if (dist - enemy.radiusShip / 2 - projectile.radius / 2 < .05 && !projectile.upgraded) {
+                if (enemy.radiusShip - 15 >= 20) {
+                    enemy.radiusShip = enemy.radiusShip / 2;
+                    setTimeout(() => {
+                        projectiles.splice(j, 1);
+                        score++;
+                    }, 0);
+                } else {
+                    setTimeout(() => {
+                        const reward = Math.random() * 2 < 0.5 ? true : false; // Random reward boolean #upgrade
+                        if (reward) { upgrades.push(new Upgrade(enemy.x, enemy.y, 5, enemy.speed, Math.random() < 0.33 ? true : false)) }; // #upgrade
+                        enemies.splice(i, 1);
+                        projectiles.splice(j, 1);
+                        score += 10;
+                    }, 0);
+                }
+
+            };
+            if (dist - enemy.radiusShip / 2 - projectile.radius / 2 < .05 && projectile.upgraded) {
+                setTimeout(() => {
+                    const reward = Math.random() * 4 < 0.5 ? true : false; // Random reward boolean #upgrade
+                    if (reward) { upgrades.push(new Upgrade(enemy.x, enemy.y, 5, enemy.speed, false)) }; // #upgrade
+                    enemies.splice(i, 1);
+                    score += 10;
+                }, 0);
+            };
+        });
+    });
+    // draw each upgrade in array and update possition #upgrade start
+    upgrades.forEach((upgrade, i) => {
+        upgrade.update();
+        const dist = Math.hypot(player.x - upgrade.x, player.y - upgrade.y);
+        if (dist - upgrade.radius / 2 - player.radiusShip / 2 < .05 && !upgrade.active) {
+            upgrade.active = true;
+        };
+        for (let projectile of projectiles) {
+            if (upgrade.type && upgrade.active && !projectile.upgraded) {
+                projectile.upgraded = true;
+            }
+        }
+    });
+    // #upgrade end
+    // keep crosshair on canvas
+    crosshair.update(); // #crosshair
+};
 
 // spawns enemy randomly around the edge of the canvas
 function spawnEnemy() {
-    setInterval(() => {
+        enemyTimer = setInterval(() => {
         const radius = Math.random() * 100 + 55;
         let x;
         let y;
@@ -297,6 +475,7 @@ function animate() {
                         enemies.splice(i, 1);
                         projectiles.splice(j, 1);
                         score += 10;
+                        enemyCount += 1;
                     }, 0);
                 }
 
@@ -307,6 +486,7 @@ function animate() {
                     if (reward) { upgrades.push(new Upgrade(enemy.x, enemy.y, 5, enemy.speed, false)) }; // #upgrade
                     enemies.splice(i, 1);
                     score += 10;
+                    enemyCount += 1;
                 }, 0);
             };
         });
@@ -327,6 +507,15 @@ function animate() {
     // #upgrade end
     // keep crosshair on canvas
     crosshair.update(); // #crosshair
+    if (enemyCount == 50) {
+        setTimeout(() => {
+            cancelAnimationFrame(frame);
+            clearInterval(enemyTimer);
+            spawnBoss();
+            animateBoss();
+            enemyCount = 0;
+        }, 0);
+    }
 };
 
 // on mouse click or screen tap draw projectiles from center to mouse(x,y) co-ordinates
@@ -411,10 +600,11 @@ function checkUpgrade(upgrade) {
 rules.onclick = function () {
     rulesModal.style.display = "block";
     cancelAnimationFrame(frame);
+    clearInterval(enemyTimer);
     rulesSpan.onclick = function () {
         rulesModal.style.display = "none";
-        clearInterval(spawnEnemy);
         requestAnimationFrame(animate);
+        spawnEnemy();
     };
 };
 
