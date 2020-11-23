@@ -328,15 +328,13 @@ function animateBoss() {
             if (boss.health < 0) {
                 score += 100;
                 bosses.splice(i, 1);
-                setTimeout(() => {
-                    cancelAnimationFrame(frame);
-                    nextLevel();
-                },800)
+                cancelAnimationFrame(frame);
                 clearInterval(enemyTimer);
                 enemies.splice(0, enemies.length);
                 enemies.length = 0;
-                animate();
-                spawnEnemy();
+                setTimeout(() => {
+                    nextLevel();
+                },800);
             }
         });
     });
@@ -653,6 +651,7 @@ window.addEventListener('keydown',
         }
     }
 );
+
 let imgCount = 0;
 function nextLevel() {
     frame = setTimeout(nextLevel, 800);
