@@ -328,7 +328,10 @@ function animateBoss() {
             if (boss.health < 0) {
                 score += 100;
                 bosses.splice(i, 1);
-                cancelAnimationFrame(frame);
+                setTimeout(() => {
+                    cancelAnimationFrame(frame);
+                    nextLevel();
+                },800)
                 clearInterval(enemyTimer);
                 enemies.splice(0, enemies.length);
                 enemies.length = 0;
@@ -650,3 +653,13 @@ window.addEventListener('keydown',
         }
     }
 );
+let imgCount = 0;
+function nextLevel() {
+    frame = setTimeout(nextLevel, 800);
+    let number = imgCount;
+    if (number <= 10) {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        ctx.drawImage(frameArray[number], 0, 0, canvas.width, canvas.height);
+        imgCount++;
+    }
+}
