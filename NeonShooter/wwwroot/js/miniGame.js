@@ -247,7 +247,7 @@ function animateBoss() {
     frame = requestAnimationFrame(animateBoss);
 
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(backgroundImg2, 0, 0, canvas.width, canvas.height);
     player.draw();
 
     ctx.font = "30px Verdana";
@@ -311,9 +311,8 @@ function animateBoss() {
                 bosses.splice(i, 1);
                 setTimeout(() => {
                     cancelAnimationFrame(frame);
-                    animate();
-                    spawnEnemy();
-                },0);
+                    nextLevel();
+                },800);
             }
         });
     });
@@ -620,3 +619,13 @@ window.addEventListener('keydown',
         }
     }
 );
+let imgCount = 0;
+function nextLevel() {
+    frame = setTimeout(nextLevel, 800);
+    let number = imgCount;
+    if (number <= 10) {
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        ctx.drawImage(frameArray[number], 0, 0, canvas.width, canvas.height);
+        imgCount++;
+    }
+}
