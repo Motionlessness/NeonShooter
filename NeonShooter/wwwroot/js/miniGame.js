@@ -247,7 +247,7 @@ function animateBoss() {
     frame = requestAnimationFrame(animateBoss);
 
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    ctx.drawImage(backgroundImg2, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
     player.draw();
 
     ctx.font = "30px Verdana";
