@@ -332,8 +332,9 @@ function animateBoss() {
                 clearInterval(enemyTimer);
                 enemies.splice(0, enemies.length);
                 enemies.length = 0;
-                animate();
-                spawnEnemy();
+                setTimeout(() => {
+                    nextLevel();
+                },800);
             }
         });
     });
