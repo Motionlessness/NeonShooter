@@ -333,8 +333,12 @@ function animateBoss() {
                 enemies.splice(0, enemies.length);
                 enemies.length = 0;
                 setTimeout(() => {
-                    nextLevel();
-                },800);
+                    if (window.confirm("Boss defeated")) {
+                        nextLevel();
+                    } else {
+                        nextLevel();
+                    }
+                }, 0);
             }
         });
     });
@@ -660,5 +664,12 @@ function nextLevel() {
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         ctx.drawImage(frameArray[number], 0, 0, canvas.width, canvas.height);
         imgCount++;
+    }
+    else {
+        clearInterval(enemyTimer);
+        clearTimeout(frame);
+        backgroundImg.src = backgroundImg2.src;
+        animate();
+        spawnEnemy();
     }
 }
