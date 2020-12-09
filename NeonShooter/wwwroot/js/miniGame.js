@@ -37,6 +37,7 @@ projectile.src = document.getElementById("projectileSVG").src;
 
 const backgroundImg = new Image();
 backgroundImg.src = document.getElementById("backgroundImg").src;
+
 // #upgrade class start
 class Upgrade {
     constructor(x, y, radius, speed, type) {
@@ -88,6 +89,58 @@ class Upgrade {
         }
     }
 }
+
+class UpgradeTwo {
+    constructor(x, y, radius, speed, type) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.speed = speed;
+        this.type = type; // Offensive(true) or Defensive(false) boolean upgrade
+        this.active = false;
+    }
+
+    draw() {
+        if (this.type == true) {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+            ctx.fillStyle = 'rgba(0,0,250,1)';
+            ctx.fill();
+        }
+        else {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+            ctx.fillStyle = 'rgba(0,250,250,1)';
+            ctx.fill();
+        }
+    }
+
+    update() {
+        if (!this.active) {
+            this.draw();
+            this.x = this.x + this.speed.x;
+            this.y = this.y + this.speed.y;
+        } else {
+            this.drawUse();
+        }
+    }
+
+    drawUse() {
+        if (this.type == true) {
+            ctx.beginPath();
+            ctx.arc(player.x, player.y, player.radius / 2.5, 0, Math.PI * 2, false);
+            ctx.strokeStyle = 'rgba(0,0,250,1)';
+            ctx.stroke();
+        }
+        else {
+            ctx.beginPath();
+            ctx.arc(player.x, player.y, player.radius / 2, 0, Math.PI * 2, false);
+            ctx.strokeStyle = 'rgba(0,250,250,1)';
+            ctx.stroke();
+        }
+    }
+}
+
 // #upgrade class end
 class Player {
     constructor(x, y, radius) {
@@ -117,9 +170,15 @@ class Projectile {
     }
 
     update() {
-        if (this.upgraded) {
+        if (this.upgraded && levelCount == 1) {
             this.radius = 30;
             this.draw();
+            this.x = this.x + this.speed.x;
+            this.y = this.y + this.speed.y;
+        } else if (this.upgraded && levelCount == 2) {
+            this.draw();
+            this.radius += .5;
+            this.radiusShip += 1;
             this.x = this.x + this.speed.x;
             this.y = this.y + this.speed.y;
         } else {
@@ -175,6 +234,7 @@ class Boss {
         this.y = center.y + (distance * Math.cos(this.speed));
     }
 }
+
 
 // (x,y) co-ordinates for mouse
 let mouse = {
@@ -232,7 +292,7 @@ const bosses = [];
 // constructs an array to contain upgrades #upgrade
 const upgrades = [];
 
-
+let levelCount = 1;
 // score of player at new game
 let score = 0;
 // number of enemy spaceships destroyed
@@ -325,19 +385,18 @@ function animateBoss() {
                     projectile.upgraded = false;
                 }, 0);
             }
-            if (boss.health < 0) {
+            if (boss.health <= 0) {
                 score += 100;
-                bosses.splice(i, 1);
-                cancelAnimationFrame(frame);
-                clearInterval(enemyTimer);
-                enemies.splice(0, enemies.length);
-                enemies.length = 0;
                 setTimeout(() => {
-                    if (window.confirm("Boss defeated")) {
-                        nextLevel();
-                    } else {
-                        nextLevel();
-                    }
+                    bosses.splice(i, 1);
+                    enemies.splice(0, enemies.length);
+                    enemies.length = 0;
+                    enemyCount = 0;
+                    shieldCount = 0;
+                    upgrades.splice(0, upgrades.length);
+                    cancelAnimationFrame(frame);
+                    clearInterval(enemyTimer);
+                    nextLevel();
                 }, 0);
             }
         });
@@ -416,27 +475,51 @@ function animateBoss() {
 
 // spawns enemy randomly around the edge of the canvas
 function spawnEnemy() {
-    enemyTimer = setInterval(() => {
-        const radius = Math.random() * 100 + 55;
-        let x;
-        let y;
-        if (Math.random() < 0.5) {
-            x = Math.random() < 0.5 ? 0 - radius * Math.PI : canvas.width + radius * Math.PI;
-            y = Math.random() * canvas.height;
-        } else {
-            x = Math.random() * canvas.width;
-            y = Math.random() < 0.5 ? 0 - radius * Math.PI : canvas.height + radius * Math.PI;
-        }
+    if (levelCount == 1) {
+        enemyTimer = setInterval(() => {
+            const radius = Math.random() * 100 + 55;
+            let x;
+            let y;
+            if (Math.random() < 0.5) {
+                x = Math.random() < 0.5 ? 0 - radius * Math.PI : canvas.width + radius * Math.PI;
+                y = Math.random() * canvas.height;
+            } else {
+                x = Math.random() * canvas.width;
+                y = Math.random() < 0.5 ? 0 - radius * Math.PI : canvas.height + radius * Math.PI;
+            }
 
-        const angle = Math.atan2(center.y - y, center.x - x);
-        const speed = {
-            x: Math.cos(angle),
-            y: Math.sin(angle)
-        };
+            const angle = Math.atan2(center.y - y, center.x - x);
+            const speed = {
+                x: Math.cos(angle),
+                y: Math.sin(angle)
+            };
 
 
-        enemies.push(new Enemy(x, y, radius, speed));
-    }, 2000);
+            enemies.push(new Enemy(x, y, radius, speed));
+        }, 2000);
+    } else if (levelCount == 2) {
+        enemyTimer = setInterval(() => {
+            const radius = Math.random() * 100 + 55;
+            let x;
+            let y;
+            if (Math.random() < 0.5) {
+                x = Math.random() < 0.5 ? 0 - radius * Math.PI : canvas.width + radius * Math.PI;
+                y = Math.random() * canvas.height;
+            } else {
+                x = Math.random() * canvas.width;
+                y = Math.random() < 0.5 ? 0 - radius * Math.PI : canvas.height + radius * Math.PI;
+            }
+
+            const angle = Math.atan2(center.y - y, center.x - x);
+            const speed = {
+                x: Math.cos(angle),
+                y: Math.sin(angle)
+            };
+
+
+            enemies.push(new Enemy(x, y, radius, speed));
+        }, 1000);
+    }
 };
 
 // animates the drawing pad 
@@ -500,8 +583,9 @@ function animate() {
                     }, 0);
                 } else {
                     setTimeout(() => {
-                        const reward = Math.random() * 2 < 0.5 ? true : false; // Random reward boolean #upgrade
-                        if (reward) { upgrades.push(new Upgrade(enemy.x, enemy.y, 5, enemy.speed, Math.random() < 0.33 ? true : false)) }; // #upgrade
+                        const reward = Math.random() * 5 < 0.5 ? true : false; // Random reward boolean #upgrade
+                        if (reward && levelCount == 1) { upgrades.push(new Upgrade(enemy.x, enemy.y, 5, enemy.speed, Math.random() < 0.33 ? true : false)) };// #upgrade
+                        if (reward && levelCount == 2) { upgrades.push(new UpgradeTwo(enemy.x, enemy.y, 5, enemy.speed, Math.random() < 0.33 ? true : false)) };
                         enemies.splice(i, 1);
                         projectiles.splice(j, 1);
                         score += 10;
@@ -512,11 +596,24 @@ function animate() {
             };
             if (dist - enemy.radiusShip / 2 - projectile.radius / 2 < .05 && projectile.upgraded) {
                 setTimeout(() => {
-                    const reward = Math.random() * 4 < 0.5 ? true : false; // Random reward boolean #upgrade
-                    if (reward) { upgrades.push(new Upgrade(enemy.x, enemy.y, 5, enemy.speed, false)) }; // #upgrade
-                    enemies.splice(i, 1);
-                    score += 10;
-                    enemyCount += 1;
+                    const reward = Math.random() * 10 < 0.5 ? true : false; // Random reward boolean #upgrade
+                    if (reward && levelCount == 1) { upgrades.push(new Upgrade(enemy.x, enemy.y, 5, enemy.speed, false)) }; // #upgrade
+                    if (reward && levelCount == 2) { upgrades.push(new UpgradeTwo(enemy.x, enemy.y, 5, enemy.speed, false)) };
+                    if (levelCount == 1) {
+                        enemies.splice(i, 1);
+                        score += 10;
+                        enemyCount += 1;
+                    } else if (levelCount == 2) {
+                        if (enemy.radiusShip - 15 >= 20) {
+                            enemy.radiusShip = enemy.radiusShip / 2;
+                            projectiles.splice(j, 1);
+                            score++;
+                        } else {
+                            enemies.splice(i, 1);
+                            score += 10;
+                            enemyCount += 1;
+                        }
+                    }
                 }, 0);
             };
         });
@@ -540,12 +637,11 @@ function animate() {
     // #upgrade end
     // keep crosshair on canvas
     crosshair.update(); // #crosshair
-    if (enemyCount == 50) {
+    if (enemyCount == 50 && levelCount == 1) {
         setTimeout(() => {
             cancelAnimationFrame(frame);
             clearInterval(enemyTimer);
             enemies.splice(0, enemies.length);
-            enemies.length = 0;
             spawnBoss();
             animateBoss();
             enemyCount = 0;
@@ -561,7 +657,9 @@ canvas.addEventListener('mousedown',
             x: Math.cos(angle) * 3,
             y: Math.sin(angle) * 3
         };
-        projectiles.push(new Projectile(center.x, center.y, 15, speed));
+        if (projectiles.length < 7) {
+            projectiles.push(new Projectile(center.x, center.y, 15, speed));
+        }
     }
 );
 
@@ -664,12 +762,12 @@ function nextLevel() {
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         ctx.drawImage(frameArray[number], 0, 0, canvas.width, canvas.height);
         imgCount++;
-    }
-    else {
-        clearInterval(enemyTimer);
-        clearTimeout(frame);
+    } else if (number == 11) {
         backgroundImg.src = backgroundImg2.src;
+        levelCount++;
         animate();
         spawnEnemy();
+        imgCount++;
     }
+
 }
